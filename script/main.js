@@ -303,3 +303,38 @@ const resolveFetch = () => {
 };
 
 resolveFetch().then(animationTimeline());
+console.log("✅ Скрипт запущен!");
+console.log("⏳ Пробую привязать обработчик к кнопке...");
+
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("✅ Обработчик событий добавлен!");
+
+  console.log("✅ DOM загружен!");
+  
+  const audio = document.getElementById("bg-music");
+  const button = document.querySelector(".music-button");
+
+  if (!button || !audio) {
+    console.error("❌ Кнопка или аудиофайл не найдены!");
+    return;
+  }
+
+  console.log("✅ Кнопка и аудио найдены!");
+
+  button.addEventListener("click", () => {
+    console.log("🎵 Кнопка нажата!");
+    
+    if (audio.paused) {
+      audio.play()
+        .then(() => {
+          button.textContent = "⏸ Остановить";
+          console.log("✅ Музыка играет!");
+        })
+        .catch(error => console.error("❌ Ошибка воспроизведения:", error));
+    } else {
+      audio.pause();
+      button.textContent = "🎵 Включить музыку";
+      console.log("⏹ Музыка остановлена!");
+    }
+  });
+});

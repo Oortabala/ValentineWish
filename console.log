@@ -1,0 +1,28 @@
+document.addEventListener("DOMContentLoaded", () => {
+  const audio = document.getElementById("bg-music");
+  const button = document.querySelector(".music-button");
+
+  console.log("Аудио:", audio);
+  console.log("Кнопка:", button);
+
+  if (!audio || !button) {
+    console.error("Аудио или кнопка не найдены!");
+    return;
+  }
+
+  button.addEventListener("click", () => {
+    console.log("Кнопка нажата!");
+
+    if (audio.paused) {
+      audio.play().then(() => {
+        button.textContent = "⏸ Остановить";
+      }).catch(error => console.error("Ошибка воспроизведения:", error));
+    } else {
+      audio.pause();
+      button.textContent = "🎵 Включить музыку";
+    }
+  });
+
+  // Устанавливаем путь к аудиофайлу (чтобы избежать кэширования)
+  audio.src = "img/music.mp3?t=" + new Date().getTime();
+});
